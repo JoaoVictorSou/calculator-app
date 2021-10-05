@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import RobotoMono from '../fonts/RobotoMono-Thin.ttf'
 
+import Display from '../components/Display'
 import Button from '../components/Button'
 
 const GlobalStyle = createGlobalStyle`
@@ -28,12 +29,11 @@ const GlobalStyle = createGlobalStyle`
 const WrapperCalculator = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 25%);
-    grid-template-rows: 50px 50px 50px 50px 50px;
+    grid-template-rows: 1fr 50px 50px 50px 50px 50px;
     height: 320px;
     width: 235px;
     border-radius: 5px;
     overflow: hidden;
-    background-color: red;
 `
 
 class Calculator extends Component {
@@ -43,6 +43,7 @@ class Calculator extends Component {
             <div>
                 <GlobalStyle />
                 <WrapperCalculator>
+                    <Display value={100} />
                     <Button label='AC' />
                     <Button label='/' />
                     <Button label='7' />
