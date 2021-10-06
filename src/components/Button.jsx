@@ -1,55 +1,44 @@
 import React from "react";
-import styled from "styled-components";
+import styled, {ThemeProvider} from "styled-components";
 
-const WrapperButton = styled.div`
+const WrapperButton = styled.button`
+        grid-column: span ${props => props.theme.gridCol};
+        font-size: 1.4em;
+        width: 100%;
+        height: 50px;
+        background-color: ${props => props.theme.backgroundColor};
+        color: ${props => props.theme.color};
+        border: none;
+        border-right: solid 1px #888;
+        border-bottom: solid 1px #888;
         
-        button {
-            font-size: 1.4em;
-            width: 100%;
-            height: 50px;
-            background-color: #f0f0f0;
-            border: none;
-            border-right: solid 1px #888;
-            border-bottom: solid 1px #888;
-        }
-        
-        button:active {
-            background-color: #ccc;
-        }
-
-        button.double {
-            grid-column: span 2;
-        }
-
-        button.triple {
-            grid-column: span 3;
-        }
-
-        .button.operation {
-            background-color: #fa8231;
-            color: #FFF;
-        }
-
-        .button.operation:active {
-            background-color: #fa8231cc;
+        :active {
+            background-color: ${props => props.theme.backgroundColorActive};
         }
 `
 
 const Button = (props) => {
-    let classes = 'button '
+    const theme = {
+        backgroundColor: props.operation ? '#fa8231' : '#f0f0f0', 
+        backgroundColorActive: props.operation ? '#fa8231cc' : '#ccc', 
+        color: props.operation ? '#FFF' : '#000', 
+        gridCol: 1
+    }
 
-    classes += props.operation ? 'operation' : ''
-    classes += props.double ? 'double' : ''
-    classes += props.triple ? 'triple' : ''
+    if (props.double) {
+        theme.gridCol = 2
+    } else if (props.triple) {
+        theme.gridCol = 3
+    }
 
     return(
-            <WrapperButton>
-                <button 
-                onClick={e => props.click && props.click(props.label)}
-                className={classes}>
-                    {props.label}
-                </button>
+        <ThemeProvider theme={theme}>
+            <WrapperButton
+            onClick={e => props.click && props.click(props.label)}
+            className={props.operation ? 'operation' : ''}>
+                {props.label}
             </WrapperButton>
+        </ThemeProvider>
     )
 }
 
