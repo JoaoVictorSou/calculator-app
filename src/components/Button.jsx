@@ -22,13 +22,7 @@ const Button = (props) => {
         backgroundColor: props.operation ? '#fa8231' : '#f0f0f0', 
         backgroundColorActive: props.operation ? '#fa8231cc' : '#ccc', 
         color: props.operation ? '#FFF' : '#000', 
-        gridCol: 1
-    }
-
-    if (props.double) {
-        theme.gridCol = 2
-    } else if (props.triple) {
-        theme.gridCol = 3
+        gridCol: props.double || props.triple ? (props.double ? 2 : 3) : 1
     }
 
     return(
