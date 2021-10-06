@@ -36,19 +36,27 @@ const WrapperCalculator = styled.div`
     overflow: hidden;
 `
 
-class Calculator extends Component {
+const initialState = {
+    displayValue: '0',
+    clearDisplay: false,
+    operation: null,
+    values: Array(2).fill(0),
+    current: 0
+}
 
+class Calculator extends Component {
     constructor(props) {
         super(props)
         this.clearMemory = this.clearMemory.bind(this)
         this.setOperation = this.setOperation.bind(this)
         this.addDigit = this.addDigit.bind(this)
-    }
-    
-    clearMemory() {
-        console.log('limpar')
+
+        this.state = {...initialState}
     }
 
+    clearMemory() {
+        this.setState({...initialState})
+    }
     setOperation(operation) {
         console.log(operation)
     }
@@ -62,7 +70,7 @@ class Calculator extends Component {
             <div>
                 <GlobalStyle />
                 <WrapperCalculator>
-                    <Display value={100} />
+                    <Display value={this.state.displayValue} />
                     <Button label='AC' click={this.clearMemory} triple/>
                     <Button label='/' click={this.setOperation} operation />
                     <Button label='7' click={this.addDigit} />
