@@ -47,11 +47,10 @@ const initialState = {
 class Calculator extends Component {
     constructor(props) {
         super(props)
+        this.state = {...initialState}
         this.clearMemory = this.clearMemory.bind(this)
         this.setOperation = this.setOperation.bind(this)
         this.addDigit = this.addDigit.bind(this)
-
-        this.state = {...initialState}
     }
 
     clearMemory() {
@@ -62,7 +61,16 @@ class Calculator extends Component {
     }
 
     addDigit(n) {
-        console.log(n)
+        if (!(this.state.displayValue.includes('.') && n === '.')) {
+            const clearDisplay = this.state.displayValue === '0' || this.state.clearDisplay
+            const currentValue = clearDisplay ? '' : this.state.displayValue
+            const displayValue = currentValue + n
+
+            this.setState({
+                displayValue, 
+                clearDisplay: false
+            })
+        } 
     }
 
     render() {
@@ -86,7 +94,7 @@ class Calculator extends Component {
                     <Button label='3' click={this.addDigit} />
                     <Button label='+' click={this.setOperation} operation />
                     <Button label='0' click={this.addDigit} double />
-                    <Button label='.' />
+                    <Button label='.' click={this.addDigit}/>
                     <Button label='=' click={this.setOperation} operation />
                     
                 </WrapperCalculator>
